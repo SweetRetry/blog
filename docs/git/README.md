@@ -1,7 +1,3 @@
----
-sidebar: auto
----
-
 # Git
 
 ## 获取 Git 仓库

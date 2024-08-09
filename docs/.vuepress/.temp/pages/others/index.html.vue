@@ -114,7 +114,7 @@
 <h2 id="浏览器" tabindex="-1"><a class="header-anchor" href="#浏览器"><span>浏览器</span></a></h2>
 <h3 id="多进程架构" tabindex="-1"><a class="header-anchor" href="#多进程架构"><span>多进程架构</span></a></h3>
 <p>Chrome 最终要把 UI、数据库、文件、设备、网络等模块重构为基础服务，类似操作系统底层服务，下面是 Chrome“面向服务的架构”的进程模型图
-<img src="@source/other/multiProgress.png" alt="图片"></p>
+<img src="@source/others/multiProgress.png" alt="图片"></p>
 <h3 id="浏览器工作原理" tabindex="-1"><a class="header-anchor" href="#浏览器工作原理"><span>浏览器工作原理</span></a></h3>
 <p>详细看MDN<a href="https://developer.mozilla.org/zh-CN/docs/Web/Performance/How_browsers_work" target="_blank" rel="noopener noreferrer">https://developer.mozilla.org/zh-CN/docs/Web/Performance/How_browsers_work</a></p>
 <h3 id="xss-csrf攻击" tabindex="-1"><a class="header-anchor" href="#xss-csrf攻击"><span>XSS/CSRF攻击</span></a></h3>

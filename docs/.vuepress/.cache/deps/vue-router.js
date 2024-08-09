@@ -1,7 +1,4 @@
 import {
-  setupDevtoolsPlugin
-} from "./chunk-UKCZNIRO.js";
-import {
   computed,
   defineComponent,
   getCurrentInstance,
@@ -19,9 +16,12 @@ import {
   unref,
   watch,
   watchEffect
-} from "./chunk-RY5ODQAQ.js";
+} from "./chunk-Y7MNRLRP.js";
+import {
+  setupDevtoolsPlugin
+} from "./chunk-D2YVLGJ5.js";
 
-// node_modules/vue-router/dist/vue-router.mjs
+// node_modules/.pnpm/vue-router@4.4.3_vue@3.4.37/node_modules/vue-router/dist/vue-router.mjs
 var isBrowser = typeof document !== "undefined";
 function isESModule(obj) {
   return obj.__esModule || obj[Symbol.toStringTag] === "Module";
@@ -170,6 +170,18 @@ function resolveRelativePath(to, from) {
   }
   return fromSegments.slice(0, position).join("/") + "/" + toSegments.slice(toPosition).join("/");
 }
+var START_LOCATION_NORMALIZED = {
+  path: "/",
+  // TODO: could we use a symbol in the future?
+  name: void 0,
+  params: {},
+  query: {},
+  hash: "",
+  fullPath: "/",
+  matched: [],
+  meta: {},
+  redirectedFrom: void 0
+};
 var NavigationType;
 (function(NavigationType2) {
   NavigationType2["pop"] = "pop";
@@ -411,7 +423,7 @@ function useHistoryStateNavigation(base) {
 
 history.replaceState(history.state, '', url)
 
-You can find more information at https://next.router.vuejs.org/guide/migration/#usage-of-history-state.`);
+You can find more information at https://router.vuejs.org/guide/migration/#Usage-of-history-state`);
     }
     changeLocation(currentState.current, currentState, true);
     const state = assign({}, buildState(currentLocation.value, to, null), { position: currentState.position + 1 }, data);
@@ -539,17 +551,6 @@ function isRouteLocation(route) {
 function isRouteName(name) {
   return typeof name === "string" || typeof name === "symbol";
 }
-var START_LOCATION_NORMALIZED = {
-  path: "/",
-  name: void 0,
-  params: {},
-  query: {},
-  hash: "",
-  fullPath: "/",
-  matched: [],
-  meta: {},
-  redirectedFrom: void 0
-};
 var NavigationFailureSymbol = Symbol(true ? "navigation failure" : "");
 var NavigationFailureType;
 (function(NavigationFailureType2) {
@@ -971,7 +972,7 @@ function createRouterMatcher(routes, globalOptions) {
         normalizedRecord.path = parent.record.path + (path && connectingSlash + path);
       }
       if (normalizedRecord.path === "*") {
-        throw new Error('Catch all routes ("*") must now be defined using a param with a custom regexp.\nSee more at https://next.router.vuejs.org/guide/migration/#removed-star-or-catch-all-routes.');
+        throw new Error('Catch all routes ("*") must now be defined using a param with a custom regexp.\nSee more at https://router.vuejs.org/guide/migration/#Removed-star-or-catch-all-routes.');
       }
       matcher = createRouteRecordMatcher(normalizedRecord, parent, options);
       if (parent && path[0] === "/")
@@ -1099,7 +1100,18 @@ function createRouterMatcher(routes, globalOptions) {
     };
   }
   routes.forEach((route) => addRoute(route));
-  return { addRoute, resolve, removeRoute, getRoutes, getRecordMatcher };
+  function clearRoutes() {
+    matchers.length = 0;
+    matcherMap.clear();
+  }
+  return {
+    addRoute,
+    resolve,
+    removeRoute,
+    clearRoutes,
+    getRoutes,
+    getRecordMatcher
+  };
 }
 function paramsFromLocation(params, keys) {
   const newParams = {};
@@ -2138,7 +2150,7 @@ function createRouter(options) {
   const stringifyQuery$1 = options.stringifyQuery || stringifyQuery;
   const routerHistory = options.history;
   if (!routerHistory)
-    throw new Error('Provide the "history" option when calling "createRouter()": https://next.router.vuejs.org/api/#history.');
+    throw new Error('Provide the "history" option when calling "createRouter()": https://router.vuejs.org/api/interfaces/RouterOptions.html#history');
   const beforeGuards = useCallbacks();
   const beforeResolveGuards = useCallbacks();
   const afterGuards = useCallbacks();
@@ -2204,7 +2216,7 @@ function createRouter(options) {
     if (!isRouteLocation(rawLocation)) {
       warn(`router.resolve() was passed an invalid location. This will fail in production.
 - Location:`, rawLocation);
-      rawLocation = {};
+      return resolve({});
     }
     let matcherLocation;
     if (rawLocation.path != null) {
@@ -2600,6 +2612,7 @@ ${JSON.stringify(newTargetLocation, null, 2)}
     listening: true,
     addRoute,
     removeRoute,
+    clearRoutes: matcher.clearRoutes,
     hasRoute,
     getRoutes,
     resolve,
@@ -2691,7 +2704,7 @@ function extractChangingRecords(to, from) {
 function useRouter() {
   return inject(routerKey);
 }
-function useRoute() {
+function useRoute(_name) {
   return inject(routeLocationKey);
 }
 export {
@@ -2723,7 +2736,7 @@ export {
 
 vue-router/dist/vue-router.mjs:
   (*!
-    * vue-router v4.3.3
+    * vue-router v4.4.3
     * (c) 2024 Eduardo San Martin Morote
     * @license MIT
     *)

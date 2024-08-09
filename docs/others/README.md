@@ -1,6 +1,3 @@
----
-sidebar: auto
----
 # Other
 
 ## 数据库

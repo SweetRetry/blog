@@ -2,7 +2,7 @@
 <p>Nginx 的主配置文件是 nginx.conf，这个配置文件一共由三部分组成，分别为全局块、events 块和 http 块。在 http 块中，又包含 http 全局块、多个 server 块。每个 server 块中，可以包含 server 全局块和多个 location 块。在同一配置块中嵌套的配置块，各个之间不存在次序关系。</p>
 <p>配置文件支持大量可配置的指令，绝大多数指令不是特定属于某一个块的。同一个指令放在不同层级的块中，其作用域也不同，一般情况下，高一级块中的指令可以作用于自身所在的块和此块包含的所有低层级块。如果某个指令在两个不同层级的块中同时出现，则采用“就近原则”，即以较低层级块中的配置为准。比如，某指令同时出现在 http 全局块中和 server 块中，并且配置不同，则应该以 server 块中的配置为准。</p>
 <h2 id="文件结构" tabindex="-1"><a class="header-anchor" href="#文件结构"><span>文件结构</span></a></h2>
-<div class="language-PERL line-numbers-mode" data-highlighter="prismjs" data-ext="PERL" data-title="PERL"><pre v-pre class="language-PERL"><code><span class="line">#全局块</span>
+<div class="language-PERL line-numbers-mode" data-highlighter="prismjs" data-ext="PERL" data-title="PERL"><pre v-pre><code><span class="line">#全局块</span>
 <span class="line">#user  nobody;</span>
 <span class="line">worker_processes  1;</span>
 <span class="line"></span>
@@ -42,7 +42,7 @@
 <div class="line-numbers" aria-hidden="true" style="counter-reset:line-number 0"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><h2 id="全局块" tabindex="-1"><a class="header-anchor" href="#全局块"><span>全局块</span></a></h2>
 <p>全局块是默认配置文件从开始到 events 块之间的一部分内容，主要设置一些影响 Nginx 服务器整体运行的配置指令，因此，这些指令的作用域是 Nginx 服务器全局。</p>
 <p>通常包括配置运行 Nginx 服务器的用户（组）、允许生成的 worker process 数、Nginx 进程 PID 存放路径、日志的存放路径和类型以及配置文件引入等。</p>
-<div class="language-makefile line-numbers-mode" data-highlighter="prismjs" data-ext="makefile" data-title="makefile"><pre v-pre class="language-makefile"><code><span class="line">指定可以运行nginx服务的用户和用户组，只能在全局块配置</span>
+<div class="language-makefile line-numbers-mode" data-highlighter="prismjs" data-ext="makefile" data-title="makefile"><pre v-pre><code><span class="line">指定可以运行nginx服务的用户和用户组，只能在全局块配置</span>
 <span class="line">user [user] [group]</span>
 <span class="line">将user指令注释掉，或者配置成nobody的话所有用户都可以运行</span>
 <span class="line">user nobody nobody<span class="token punctuation">;</span></span>
@@ -68,7 +68,7 @@
 <div class="line-numbers" aria-hidden="true" style="counter-reset:line-number 0"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><h2 id="events-块" tabindex="-1"><a class="header-anchor" href="#events-块"><span>events 块</span></a></h2>
 <p>events 块涉及的指令主要影响 Nginx 服务器与用户的网络连接。常用到的设置包括是否开启对多 worker process 下的网络连接进行序列化，是否允许同时接收多个网络连接，选取哪种事件驱动模型处理连接请求，每个 worker process 可以同时支持的最大连接数等。</p>
 <p>这一部分的指令对 Nginx 服务器的性能影响较大，在实际配置中应该根据实际情况灵活调整。</p>
-<div class="language-makefile line-numbers-mode" data-highlighter="prismjs" data-ext="makefile" data-title="makefile"><pre v-pre class="language-makefile"><code><span class="line">当某一时刻只有一个网络连接到来时，多个睡眠进程会被同时叫醒，但只有一个进程可获得连接。</span>
+<div class="language-makefile line-numbers-mode" data-highlighter="prismjs" data-ext="makefile" data-title="makefile"><pre v-pre><code><span class="line">当某一时刻只有一个网络连接到来时，多个睡眠进程会被同时叫醒，但只有一个进程可获得连接。</span>
 <span class="line">如果每次唤醒的进程数目太多，会影响一部分系统性能。在Nginx服务器的多进程下，就有可能出现这样的问题。</span>
 <span class="line">开启的时候，将会对多个Nginx进程接收连接进行序列化，防止多个进程对连接的争抢。</span>
 <span class="line">默认是开启状态，只能在events块中进行配置。</span>
@@ -94,7 +94,7 @@
 <p>http 块是 Nginx 服务器配置中的重要部分，代理、缓存和日志定义等绝大多数的功能和第三方模块的配置都可以放在这个模块中。</p>
 <p>前面已经提到，http 块中可以包含自己的全局块，也可以包含 server 块，server 块中又可以进一步包含 location 块，在本书中我们使用“http 全局块”来表示 http 中自己的全局块，即 http 块中不包含在 server 块中的部分。</p>
 <p>可以在 http 全局块中配置的指令包括文件引入、MIME-Type 定义、日志自定义、是否使用 sendfile 传输文件、连接超时时间、单连接请求数上限等。</p>
-<div class="language-makefile line-numbers-mode" data-highlighter="prismjs" data-ext="makefile" data-title="makefile"><pre v-pre class="language-makefile"><code><span class="line">常用的浏览器中，可以显示的内容有HTML、XML、GIF及Flash等种类繁多的文本、媒体等资源，浏览器为区分这些资源，需要使用MIME Type。换言之，MIME Type是网络资源的媒体类型。Nginx服务器作为Web服务器，必须能够识别前端请求的资源类型。</span>
+<div class="language-makefile line-numbers-mode" data-highlighter="prismjs" data-ext="makefile" data-title="makefile"><pre v-pre><code><span class="line">常用的浏览器中，可以显示的内容有HTML、XML、GIF及Flash等种类繁多的文本、媒体等资源，浏览器为区分这些资源，需要使用MIME Type。换言之，MIME Type是网络资源的媒体类型。Nginx服务器作为Web服务器，必须能够识别前端请求的资源类型。</span>
 <span class="line"></span>
 <span class="line"><span class="token keyword">include</span>指令，用于包含其他的配置文件，可以放在配置文件的任何地方，但是要注意你包含进来的配置文件一定符合配置规范，比如说你<span class="token keyword">include</span>进来的配置是worker_processes指令的配置，而你将这个指令包含到了http块中，着肯定是不行的，上面已经介绍过worker_processes指令只能在全局块中。</span>
 <span class="line">下面的指令将mime.types包含进来，mime.types和ngin.cfg同级目录，不同级的话需要指定具体路径</span>
@@ -144,7 +144,7 @@
 <p>和 http 块相同，server 块也可以包含自己的全局块，同时可以包含多个 location 块。在 server 全局块中，最常见的两个配置项是本虚拟主机的监听配置和本虚拟主机的名称或 IP 配置。</p>
 <h3 id="listen-指令" tabindex="-1"><a class="header-anchor" href="#listen-指令"><span>listen 指令</span></a></h3>
 <p>server 块中最重要的指令就是 listen 指令，这个指令有三种配置语法。这个指令默认的配置值是：<code v-pre>listen _:80 | _:8000</code>；只能在 server 块种配置这个指令。</p>
-<div class="language-less line-numbers-mode" data-highlighter="prismjs" data-ext="less" data-title="less"><pre v-pre class="language-less"><code><span class="line"><span class="token comment">//第一种</span></span>
+<div class="language-less line-numbers-mode" data-highlighter="prismjs" data-ext="less" data-title="less"><pre v-pre><code><span class="line"><span class="token comment">//第一种</span></span>
 <span class="line">listen address[<span class="token punctuation">:</span>port] [default_server] [ssl] [http2 | spdy] [proxy_protocol]</span>
 <span class="line">[setfib=number] [fastopen=number] [backlog=number] [rcvbuf=size] [sndbuf=size]</span>
 <span class="line">[accept_filter=filter] [deferred] [bind] [ipv6only=on|off] [reuseport]</span>
@@ -161,7 +161,7 @@
 <span class="line">[deferred] [bind] [so_keepalive=on|off|[keepidle]<span class="token punctuation">:</span>[keepintvl]<span class="token punctuation">:</span>[keepcnt]]<span class="token punctuation">;</span></span>
 <span class="line"></span></code></pre>
 <div class="line-numbers" aria-hidden="true" style="counter-reset:line-number 0"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><p>listen 指令的配置非常灵活，可以单独制定 ip，单独指定端口或者同时指定 ip 和端口。</p>
-<div class="language-makefile line-numbers-mode" data-highlighter="prismjs" data-ext="makefile" data-title="makefile"><pre v-pre class="language-makefile"><code><span class="line"><span class="token target symbol">listen 127.0.0.1</span><span class="token punctuation">:</span>8000<span class="token punctuation">;</span> <span class="token comment">#只监听来自 127.0.0.1 这个 IP，请求 8000 端口的请求</span></span>
+<div class="language-makefile line-numbers-mode" data-highlighter="prismjs" data-ext="makefile" data-title="makefile"><pre v-pre><code><span class="line"><span class="token target symbol">listen 127.0.0.1</span><span class="token punctuation">:</span>8000<span class="token punctuation">;</span> <span class="token comment">#只监听来自 127.0.0.1 这个 IP，请求 8000 端口的请求</span></span>
 <span class="line">listen 127.0.0.1<span class="token punctuation">;</span> <span class="token comment">#只监听来自 127.0.0.1 这个 IP，请求 80 端口的请求（不指定端口，默认 80）</span></span>
 <span class="line">listen 8000<span class="token punctuation">;</span> <span class="token comment">#监听来自所有 IP，请求 8000 端口的请求</span></span>
 <span class="line"><span class="token target symbol">listen \*</span><span class="token punctuation">:</span>8000<span class="token punctuation">;</span> <span class="token comment">#和上面效果一样</span></span>
@@ -180,17 +180,17 @@ listen 指令的使用看起来比较复杂，但其实在一般的使用过程�
 </ul>
 <h3 id="server-name" tabindex="-1"><a class="header-anchor" href="#server-name"><span>server_name</span></a></h3>
 <p>用于配置虚拟主机的名称。语法是：</p>
-<div class="language-makefile line-numbers-mode" data-highlighter="prismjs" data-ext="makefile" data-title="makefile"><pre v-pre class="language-makefile"><code><span class="line"><span class="token target symbol">Syntax</span><span class="token punctuation">:</span> server_name name ...<span class="token punctuation">;</span></span>
+<div class="language-makefile line-numbers-mode" data-highlighter="prismjs" data-ext="makefile" data-title="makefile"><pre v-pre><code><span class="line"><span class="token target symbol">Syntax</span><span class="token punctuation">:</span> server_name name ...<span class="token punctuation">;</span></span>
 <span class="line"><span class="token target symbol">Default</span><span class="token punctuation">:</span></span>
 <span class="line">server_name <span class="token string">""</span><span class="token punctuation">;</span></span>
 <span class="line"><span class="token target symbol">Context</span><span class="token punctuation">:</span> server</span>
 <span class="line"></span></code></pre>
 <div class="line-numbers" aria-hidden="true" style="counter-reset:line-number 0"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><p>对于 name 来说，可以只有一个名称，也可以由多个名称并列，之间用空格隔开。每个名字就是一个域名，由两段或者三段组成，之间由点号“.”隔开。比如</p>
-<div class="language-text line-numbers-mode" data-highlighter="prismjs" data-ext="text" data-title="text"><pre v-pre class="language-text"><code><span class="line">server_name myserver.com www.myserver.com</span>
+<div class="language-text line-numbers-mode" data-highlighter="prismjs" data-ext="text" data-title="text"><pre v-pre><code><span class="line">server_name myserver.com www.myserver.com</span>
 <span class="line"></span></code></pre>
 <div class="line-numbers" aria-hidden="true" style="counter-reset:line-number 0"><div class="line-number"></div></div></div><p>在该例中，此虚拟主机的名称设置为 myserver.com 或 www. myserver.com。Nginx 服务器规定，第一个名称作为此虚拟主机的主要名称。</p>
 <p>在 name 中可以使用通配符“*”，但通配符只能用在由三段字符串组成的名称的首段或尾段，或者由两段字符串组成的名称的尾段，如：</p>
-<div class="language-text line-numbers-mode" data-highlighter="prismjs" data-ext="text" data-title="text"><pre v-pre class="language-text"><code><span class="line">server_name myserver.\* \*.myserver.com</span>
+<div class="language-text line-numbers-mode" data-highlighter="prismjs" data-ext="text" data-title="text"><pre v-pre><code><span class="line">server_name myserver.\* \*.myserver.com</span>
 <span class="line"></span></code></pre>
 <div class="line-numbers" aria-hidden="true" style="counter-reset:line-number 0"><div class="line-number"></div></div></div><p>另外 name 还支持正则表达式的形式。这边就不详细展开了。</p>
 <p>由于 server_name 指令支持使用通配符和正则表达式两种配置名称的方式，因此在包含有多个虚拟主机的配置文件中，可能会出现一个名称被多个虚拟主机的 server_name 匹配成功。那么，来自这个名称的请求到底要交给哪个虚拟主机处理呢？Nginx 服务器做出如下规定：</p>
@@ -208,7 +208,7 @@ listen 指令的使用看起来比较复杂，但其实在一般的使用过程�
 <p>有时候我们希望使用基于 IP 地址的虚拟主机配置，比如访问 192.168.1.31 有虚拟主机 1 处理，访问 192.168.1.32 由虚拟主机 2 处理。</p>
 <p>这时我们要先网卡绑定别名，比如说网卡之前绑定的 IP 是 192.168.1.30，现在将 192.168.1.31 和 192.168.1.32 这两个 IP 都绑定到这个网卡上，那么请求这个两个 IP 的请求才会到达这台机器。</p>
 <p>绑定别名后进行以下配置即可：</p>
-<div class="language-less line-numbers-mode" data-highlighter="prismjs" data-ext="less" data-title="less"><pre v-pre class="language-less"><code><span class="line"><span class="token selector">http</span> <span class="token punctuation">{</span></span>
+<div class="language-less line-numbers-mode" data-highlighter="prismjs" data-ext="less" data-title="less"><pre v-pre><code><span class="line"><span class="token selector">http</span> <span class="token punctuation">{</span></span>
 <span class="line">   <span class="token punctuation">{</span></span>
 <span class="line">    <span class="token property">listen</span><span class="token punctuation">:</span> 80<span class="token punctuation">;</span></span>
 <span class="line">    <span class="token property">server_name</span><span class="token punctuation">:</span> 192.168.1.31<span class="token punctuation">;</span></span>
@@ -241,13 +241,13 @@ listen 指令的使用看起来比较复杂，但其实在一般的使用过程�
 </div>
 <h3 id="root-指令" tabindex="-1"><a class="header-anchor" href="#root-指令"><span>root 指令</span></a></h3>
 <p>这个指令用于设置请求寻找资源的跟目录，此指令可以在 http 块、server 块或者 location 块中配置。由于使用 Nginx 服务器多数情况下要配置多个 location 块对不同的请求分别做出处理，因此该指令通常在 location 块中进行设置。</p>
-<div class="language-text line-numbers-mode" data-highlighter="prismjs" data-ext="text" data-title="text"><pre v-pre class="language-text"><code><span class="line">root path</span>
+<div class="language-text line-numbers-mode" data-highlighter="prismjs" data-ext="text" data-title="text"><pre v-pre><code><span class="line">root path</span>
 <span class="line"></span></code></pre>
 <div class="line-numbers" aria-hidden="true" style="counter-reset:line-number 0"><div class="line-number"></div></div></div><p>path 变量中可以包含 Nginx 服务器预设的大多数变量，只有 documentroot 和 realpath_root 不可以使用。</p>
 <p>一点说明
 上面列举了 Nignx 中全局块、event 块和 http 块的一些配置指令，但是 Nginx 的指令远远不止这些。其实这边最主要的还是讲解整个配置文件的结构，如果大家要看比较全的指令介绍、模块介绍的话，建议去 Nginx 的官网。</p>
 <p>一个配置文件的列子</p>
-<div class="language-bash line-numbers-mode" data-highlighter="prismjs" data-ext="sh" data-title="sh"><pre v-pre class="language-bash"><code><span class="line"><span class="token comment">######Nginx 配置文件 nginx.conf 中文详解#####</span></span>
+<div class="language-bash line-numbers-mode" data-highlighter="prismjs" data-ext="sh" data-title="sh"><pre v-pre><code><span class="line"><span class="token comment">######Nginx 配置文件 nginx.conf 中文详解#####</span></span>
 <span class="line"></span>
 <span class="line"><span class="token comment">#定义 Nginx 运行的用户和用户组</span></span>
 <span class="line">user www www<span class="token punctuation">;</span></span>

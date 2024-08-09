@@ -1,6 +1,5 @@
 ---
-sidebar: auto
-collapsible: auto,
+collapsible: auto
 ---
 
 # Node.Js

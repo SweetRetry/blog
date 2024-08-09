@@ -31,7 +31,7 @@
 或者你需要把文件从 git 中删除但仍保留在本地仓库中,换而言之就是你不想要 git 继续追踪该文件。使用 git rm --cached [files]</p>
 <h3 id="移动文件" tabindex="-1"><a class="header-anchor" href="#移动文件"><span>移动文件</span></a></h3>
 <p>运行 git mv 就相当于运行了下面三条命令：</p>
-<div class="language-bash line-numbers-mode" data-highlighter="prismjs" data-ext="sh" data-title="sh"><pre v-pre class="language-bash"><code><span class="line"><span class="token function">mv</span> README.md README</span>
+<div class="language-bash line-numbers-mode" data-highlighter="prismjs" data-ext="sh" data-title="sh"><pre v-pre><code><span class="line"><span class="token function">mv</span> README.md README</span>
 <span class="line"><span class="token function">git</span> <span class="token function">rm</span> README.md</span>
 <span class="line"><span class="token function">git</span> <span class="token function">add</span> README</span>
 <span class="line"></span></code></pre>
@@ -54,7 +54,7 @@ format 子选项可以定制记录的显示格式。</p>
 </ol>
 <ul>
 <li>限制输出长度<br>
-<img src="@source/git/git限制输出长度.png" alt="图片"></li>
+<img src="@source/Git/git限制输出长度.png" alt="图片"></li>
 </ul>
 </div></template>
 

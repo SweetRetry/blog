@@ -17,5 +17,5 @@ features:
   - title: Nginx
     details: Nginx (engine x) 是一个高性能的HTTP和反向代理web服务器，同时也提供了IMAP/POP3/SMTP服务。
 
-footer: MIT Licensed | Copyright © 2022-present Retry
+footer: MIT Licensed | Copyright © 2024-present Retry
 ---

@@ -1,7 +1,4 @@
----
-sidebar: auto
-collapsible: true,
----
+
 # TypeScript
 
 ## 内置类型
