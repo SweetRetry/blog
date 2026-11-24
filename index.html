@@ -1,0 +1,237 @@
+<!doctype html>
+<html lang="zh-CN" class="h-full">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>回路笔记</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/basecoat-css@1.0.2/dist/basecoat.cdn.min.css" />
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4.3.3"></script>
+    <style type="text/tailwindcss">
+      /* Basecoat 已带 preflight 与默认主题；这里只编译 utility，并把 shadcn 变量接到 utility 名上。 */
+      @import "tailwindcss/theme" layer(theme);
+      @import "tailwindcss/utilities" layer(utilities);
+
+      @theme inline {
+        --color-background: var(--background);
+        --color-foreground: var(--foreground);
+        --color-card: var(--card);
+        --color-card-foreground: var(--card-foreground);
+        --color-popover: var(--popover);
+        --color-popover-foreground: var(--popover-foreground);
+        --color-primary: var(--primary);
+        --color-primary-foreground: var(--primary-foreground);
+        --color-secondary: var(--secondary);
+        --color-secondary-foreground: var(--secondary-foreground);
+        --color-muted: var(--muted);
+        --color-muted-foreground: var(--muted-foreground);
+        --color-accent: var(--accent);
+        --color-accent-foreground: var(--accent-foreground);
+        --color-destructive: var(--destructive);
+        --color-border: var(--border);
+        --color-input: var(--input);
+        --color-ring: var(--ring);
+        --radius-sm: calc(var(--radius) - 4px);
+        --radius-md: calc(var(--radius) - 2px);
+        --radius-lg: var(--radius);
+        --radius-xl: calc(var(--radius) + 4px);
+      }
+
+      @layer base {
+        html {
+          @apply scroll-smooth;
+        }
+        @media (prefers-reduced-motion: reduce) {
+          html {
+            scroll-behavior: auto;
+          }
+        }
+      }
+
+      /* 取值模式：在此覆盖变量，例如 :root { --primary: oklch(55% 0.2 250); --radius: 0.5rem; } */
+    </style>
+    <style>
+/* shared */
+[x-cloak]{display:none!important}
+#blog{container-type:inline-size;position:relative}
+main button{cursor:pointer;font:inherit;color:inherit;background:none;border:0;padding:0}
+main a{color:inherit;text-decoration:none;cursor:pointer}
+.step{transition:opacity .28s ease, transform .28s ease}
+.step.hidden-step{opacity:0;transform:translateY(4px)}
+@media (prefers-reduced-motion: reduce){*{transition:none!important;animation:none!important}}
+
+/* ===== 主题 ===== */
+.ca{--serif:"Iowan Old Style","Songti SC","Noto Serif SC",Georgia,serif;--sans:-apple-system,"PingFang SC",Inter,system-ui,sans-serif;
+  --f-head:var(--serif);--f-body:var(--serif);
+  --bg:#f8f6f1;--fg:#262421;--mu:#6f695f;--ln:#e4dfd4;--code:#efebe2;--soft:#3c3934;--ac:#9a3b1f;
+  background:var(--bg);color:var(--fg);font-family:var(--f-body);transition:background .25s,color .25s}
+.ca-bar{position:sticky;top:0;height:2px;background:var(--ac);transform-origin:left;z-index:5;transition:transform .08s linear}
+/* ===== 单轴排版 ===== */
+.cs{--cw:38rem;--nw:13rem;--gap:2.5rem;--t-meta:13px;--t-small:15px;--t-body:17px;--t-lead:20px;--t-h1:32px;
+  font-variant-numeric:lining-nums tabular-nums}
+.cs .meta{font-size:var(--t-meta);line-height:1.6;color:var(--mu)}
+.cs .row{display:contents}
+.cs-grid{display:grid;justify-content:center;column-gap:var(--gap);align-items:baseline;padding:96px 32px 128px}
+.cs-grid{grid-template-columns:[c] minmax(0,var(--cw)) [n] var(--nw)}
+.cs .c{grid-column:c}
+.cs .n{grid-column:n}
+.cs .w{grid-column:1 / n}
+/* home */
+.cs-head{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:64px}
+.cs-name{font-size:var(--t-body)}
+.cs-name::before{content:"";display:inline-block;width:6px;height:6px;border-radius:50%;background:var(--ac);margin-right:10px;vertical-align:3px}
+.cs-head nav{display:flex;gap:24px}.cs-head nav a:hover{color:var(--fg)}
+.cs-intro{font-size:var(--t-lead);line-height:1.8;margin:0 0 64px;color:var(--fg)}
+.cs-year{margin:0 0 8px}
+.cs-list{margin:0 0 40px}
+.cs-list a{display:flex;justify-content:space-between;align-items:baseline;gap:24px;padding:6px 0}
+.cs-list .t{font-size:var(--t-body);line-height:1.6;background:linear-gradient(var(--ac),var(--ac)) 0 100%/0 1px no-repeat;transition:background-size .3s ease,color .2s}
+.cs-list a:hover .t{background-size:100% 1px;color:var(--ac)}
+.cs-foot{display:flex;justify-content:space-between;padding-top:24px;border-top:1px solid var(--ln);margin-top:24px}
+/* article */
+.cs-back{margin-bottom:40px;display:inline-flex;gap:8px;transition:gap .2s,color .2s}.cs-back:hover{gap:12px;color:var(--fg)}
+.cs-art h1{font-size:var(--t-h1);line-height:1.3;font-weight:600;margin:0 0 16px}
+.cs-ameta{margin:0 0 64px}
+.cs-art p{font-size:var(--t-body);line-height:1.9;margin:0 0 24px}
+.cs-art p.lead{font-size:var(--t-lead);line-height:1.8;margin-bottom:32px}
+.cs-art h2{font-size:var(--t-lead);font-weight:600;line-height:1.5;margin:40px 0 16px}
+.cs-mk{font-size:11px;color:var(--ac);vertical-align:super;margin-left:2px;line-height:0}
+.cs-note{margin:0}
+.cs-note b{color:var(--ac);font-weight:400;margin-right:6px}
+.cs-code{position:relative;margin:8px -24px 32px;padding:20px 24px;background:var(--code);border-radius:4px;font:var(--t-small)/1.75 "SF Mono",ui-monospace,Menlo,monospace;overflow:auto}
+.cs-copy{position:absolute;top:16px;right:20px;font-family:inherit;opacity:0;transition:opacity .2s}
+.cs-code:hover .cs-copy,.cs-copy:focus{opacity:1}
+.cs-copy:hover{color:var(--fg)}
+.cs-quote{font-size:var(--t-lead);line-height:1.8;margin:16px 0 40px}
+.cs-quote::before{content:"";display:block;width:24px;height:1px;background:var(--ac);margin-bottom:16px}
+.cs-trace{margin:8px 0 32px;padding:16px 0;border-top:1px solid var(--ln);border-bottom:1px solid var(--ln);display:grid;row-gap:4px;align-items:baseline}
+.cs-trace{grid-column:c;grid-template-columns:4.5rem 1fr;column-gap:16px}
+.cs-trace li{display:contents}
+.cs-trace .th{grid-column:1 / -1;display:flex;justify-content:space-between;margin-bottom:8px}
+.cs-trace .th button:hover{color:var(--ac)}
+.cs-trace .tk{grid-column:1}
+.cs-trace .tk.error{color:var(--ac)}
+.cs-trace .tb{grid-column:2;display:flex;justify-content:space-between;align-items:baseline;gap:16px;font-size:var(--t-small);line-height:1.7}
+.cs-trace code{font:14px "SF Mono",ui-monospace,monospace}
+.cs-trace .step.hidden-step{opacity:0}
+/* narrow fallback */
+@container (max-width:1060px){
+  .cs-grid{grid-template-columns:[c] minmax(0,var(--cw))}
+  .cs .n{grid-column:c;display:none;margin:-12px 0 24px}
+  .cs .n.open{display:block}
+}
+</style>
+    <script>
+window.POSTS = [
+  {id:1,date:'2026-11-18',title:'Agent 的循环比模型更重要',tags:['agent','架构'],min:12,summary:'剥掉框架之后，一个 agent 只剩一个 while 循环。决定体验的是循环里的三件事：可观察、可中断、可恢复。'},
+  {id:2,date:'2026-10-30',title:'Eval 不是测试，是望远镜',tags:['eval'],min:9,summary:'测试告诉你有没有坏，eval 告诉你往哪个方向变好。把它当望远镜用，而不是门禁。'},
+  {id:3,date:'2026-10-02',title:'上下文窗口是一种预算',tags:['context'],min:7,summary:'每一个 token 都在和别的信息竞争注意力。裁剪、摘要和检索，本质是预算分配。'},
+  {id:4,date:'2026-08-21',title:'工具描述就是 prompt',tags:['tools','prompt'],min:6,summary:'模型调用工具前读到的只有名字和描述。写工具描述和写给新同事的文档是一回事。'},
+  {id:5,date:'2026-06-11',title:'多 agent 什么时候值得',tags:['agent'],min:11,summary:'拆成多个 agent 换来的是隔离与并行，付出的是协调成本。大多数时候一个就够了。'},
+  {id:6,date:'2026-03-04',title:'读 200 次失败的 run 之后',tags:['eval','笔记'],min:8,summary:'失败日志比成功日志诚实。按失败形态分类之后，改进的顺序自己就浮现了。'},
+  {id:7,date:'2025-12-15',title:'Prompt 不是咒语',tags:['prompt'],min:5,summary:'把 prompt 当成写给聪明但缺乏上下文的人的说明，而不是一串需要碰运气的关键词。'},
+];
+window.TRACE = [
+  {kind:'think',text:'先弄清项目怎么跑测试'},
+  {kind:'tool',text:'read_file("package.json")',ms:'120ms'},
+  {kind:'obs',text:'找到 test 脚本：vitest run'},
+  {kind:'tool',text:'run("npm test")',ms:'8.4s'},
+  {kind:'error',text:'2 failed · date.test.ts'},
+  {kind:'think',text:'两个失败都和时区有关，去读源码'},
+  {kind:'tool',text:'read_file("src/date.ts")',ms:'90ms'},
+  {kind:'final',text:'parseDate 默认用本地时区，改为 UTC 后全部通过'},
+];
+window.CODE = 'while (!done) {\n  const step = await model.next(context)\n  const result = await tools.run(step)\n  context.push(step, result)\n  done = step.type === "final"\n}';
+
+
+window.ARTICLE = [
+  {type:'lead',text:'过去一年我写了十几个 agent。回头看，决定它们好不好用的，很少是选了哪个模型，更多是那个看起来平平无奇的 while 循环。'},
+  {type:'h2',id:'shape',text:'循环长什么样'},
+  {type:'p',text:'剥掉框架，一个 agent 就是读取状态，让模型决定下一步，执行工具，把结果写回上下文，直到模型说完成。',note:'“完成”本身也是模型的一次判断，所以它同样会出错。',n:1},
+  {type:'code'},
+  {type:'p',text:'这五行里每一行都藏着一个设计决策。上下文怎么裁剪，工具失败怎么回传，什么时候该停。下面是一次真实形态的运行记录。'},
+  {type:'trace'},
+  {type:'h2',id:'fail',text:'失败要回到模型手里'},
+  {type:'p',text:'最常见的错误是把工具异常吞掉，或者遇到异常直接终止。把错误原文交还给模型，它常常能在下一步自己修正。',note:'前提是错误信息本身可读。一个只写着 “Error: 1” 的异常对模型和人一样没用。',n:2},
+  {type:'quote',text:'好的 agent 不是从不出错，而是出错之后还在循环里。'},
+  {type:'h2',id:'three',text:'可观察、可中断、可恢复'},
+  {type:'p',text:'所以与其先换更大的模型，不如先把循环里的三件事做对。每一步都能被看见，任何时候都能被人打断，打断之后能从原处接着跑。'},
+  {type:'p',text:'这三件事做好之后，换模型才会变成一次可以衡量的实验，而不是一次祈祷。'},
+];
+function blog(key){return{
+  key, posts:POSTS, blocks:ARTICLE, trace:TRACE, code:CODE,
+  view:'home', current:POSTS[0], tag:'全部', progress:0, active:'shape', shown:TRACE.length, copied:false, openNote:null,
+  get toc(){return ARTICLE.filter(b=>b.type==='h2')},
+  get tags(){const c={};POSTS.forEach(p=>p.tags.forEach(t=>c[t]=(c[t]||0)+1));return [['全部',POSTS.length],...Object.entries(c)]},
+  get filtered(){return POSTS.filter(p=>this.tag==='全部'||p.tags.includes(this.tag))},
+  get years(){const g={};this.filtered.forEach(p=>(g[p.date.slice(0,4)]??=[]).push(p));return Object.entries(g).sort((a,b)=>b[0]-a[0]).map(([year,posts])=>({year,posts}))},
+  md(d){const [,m,dd]=d.split('-');return (+m)+'月'+(+dd)+'日'},
+  init(){
+    addEventListener('scroll',()=>this.onScroll(),{passive:true});
+    
+  },
+  open(p){this.current=p;this.view='article';this.progress=0;this.openNote=null;this.$nextTick(()=>requestAnimationFrame(()=>{this.$root.scrollIntoView();this.onScroll()}))},
+  back(){this.view='home';this.$nextTick(()=>this.$root.scrollIntoView())},
+  onScroll(){
+    if(this.view!=='article') return;
+    const a=this.$refs.article; if(!a) return;
+    const r=a.getBoundingClientRect();
+    this.progress=Math.min(1,Math.max(0,-r.top/Math.max(1,r.height-innerHeight)));
+    let cur=this.toc[0].id;
+    this.toc.forEach(h=>{const el=document.getElementById('s-'+h.id); if(el&&el.getBoundingClientRect().top<160) cur=h.id});
+    this.active=cur;
+  },
+  replay(){clearInterval(this._t);this.shown=0;this._t=setInterval(()=>{this.shown++;if(this.shown>=TRACE.length)clearInterval(this._t)},420)},
+  copy(){try{navigator.clipboard.writeText(CODE).catch(()=>{})}catch(e){}this.copied=true;clearTimeout(this._c);this._c=setTimeout(()=>this.copied=false,1400)},
+  jump(id){document.getElementById(key+'-'+id).scrollIntoView({behavior:matchMedia('(prefers-reduced-motion: reduce)').matches?'auto':'smooth'})},
+}}
+</script>
+    <script defer src="https://cdn.jsdelivr.net/npm/basecoat-css@1.0.2/dist/js/all.min.js"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.17.4/dist/cdn.min.js"></script>
+  </head>
+  <body class="min-h-full bg-background text-foreground antialiased" data-motion="false">
+    <main>
+<section id="blog" class="ca min-h-svh" x-data="blog('a')">
+  <div class="ca-bar" x-show="view==='article'" :style="'transform:scaleX('+progress+')'"></div>
+  <div class="cs">
+    <div class="cs-grid" x-show="view==='home'">
+      <header class="c cs-head"><span class="cs-name">回路笔记</span><nav class="meta"><a>文章</a><a>关于</a><a>RSS</a></nav></header>
+      <p class="c cs-intro">记录一些突发的思考。</p>
+      <template x-for="g in years" :key="g.year"><div class="row">
+        <div class="c">
+          <h3 class="meta cs-year" x-text="g.year"></h3>
+          <ul class="cs-list"><template x-for="p in g.posts" :key="p.id">
+            <li><a href="#" @click.prevent="open(p)"><span class="t" x-text="p.title"></span><time class="meta" x-text="p.date.slice(5).replace('-','.')"></time></a></li>
+          </template></ul>
+        </div>
+      </div></template>
+      <footer class="c meta cs-foot"><span>© 2026 回路笔记</span><span>RSS</span></footer>
+    </div>
+    <article class="cs-grid cs-art" x-show="view==='article'" x-ref="article">
+      <a class="c meta cs-back" href="#" @click.prevent="back()"><span>←</span><span>回路笔记</span></a>
+      <h1 class="c" x-text="current.title"></h1>
+      <div class="c meta cs-ameta" x-text="current.date.replaceAll('-','.')+' · '+current.min+' 分钟'"></div>
+      <template x-for="(b,i) in blocks" :key="i"><div class="row">
+        <template x-if="b.type==='lead'"><p class="c lead" x-text="b.text"></p></template>
+        <template x-if="b.type==='h2'"><h2 class="c" :id="'s-'+b.id" x-text="b.text"></h2></template>
+        <template x-if="b.type==='p'"><p class="c"><span x-text="b.text"></span><template x-if="b.note"><button class="cs-mk" @click="openNote=openNote===i?null:i" x-text="b.n"></button></template></p></template>
+        <template x-if="b.note"><aside class="n meta cs-note" :class="openNote===i&&'open'"><b x-text="b.n"></b><span x-text="b.note"></span></aside></template>
+        <template x-if="b.type==='code'"><pre class="c cs-code"><button class="cs-copy meta" @click="copy()" x-text="copied?'已复制':'复制'"></button><code x-text="code"></code></pre></template>
+        <template x-if="b.type==='quote'"><blockquote class="c cs-quote" x-text="b.text"></blockquote></template>
+        <template x-if="b.type==='trace'"><figure class="cs-trace">
+          <div class="th meta"><span>一次运行 · 8 步</span><button @click="replay()">重放</button></div>
+          <template x-for="(s,j) in trace" :key="j"><li>
+            <span class="tk meta step" :class="[s.kind, j>=shown&&'hidden-step']" x-text="s.kind"></span>
+            <span class="tb step" :class="j>=shown&&'hidden-step'"><span><template x-if="s.kind==='tool'"><code x-text="s.text"></code></template><template x-if="s.kind!=='tool'"><span x-text="s.text"></span></template></span><span class="meta" x-text="s.ms||''"></span></span>
+          </li></template>
+        </figure></template>
+      </div></template>
+    </article>
+  </div>
+</section>
+      </main>
+
+    <div id="toaster" class="toaster"></div>
+
+    
+  </body>
+</html>
