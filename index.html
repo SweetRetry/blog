@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>回路笔记</title>
+    <title>SweetRetry</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/basecoat-css@1.0.2/dist/basecoat.cdn.min.css" />
     <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4.3.3"></script>
     <style type="text/tailwindcss">
@@ -194,7 +194,7 @@ function blog(key){return{
   <div class="ca-bar" x-show="view==='article'" :style="'transform:scaleX('+progress+')'"></div>
   <div class="cs">
     <div class="cs-grid" x-show="view==='home'">
-      <header class="c cs-head"><span class="cs-name">回路笔记</span><nav class="meta"><a>文章</a><a>关于</a><a>RSS</a></nav></header>
+      <header class="c cs-head"><span class="cs-name">SweetRetry</span><nav class="meta"><a>文章</a><a>关于</a><a>RSS</a></nav></header>
       <p class="c cs-intro">记录一些突发的思考。</p>
       <template x-for="g in years" :key="g.year"><div class="row">
         <div class="c">
@@ -204,10 +204,10 @@ function blog(key){return{
           </template></ul>
         </div>
       </div></template>
-      <footer class="c meta cs-foot"><span>© 2026 回路笔记</span><span>RSS</span></footer>
+      <footer class="c meta cs-foot"><span>© 2026 SweetRetry</span><span>RSS</span></footer>
     </div>
     <article class="cs-grid cs-art" x-show="view==='article'" x-ref="article">
-      <a class="c meta cs-back" href="#" @click.prevent="back()"><span>←</span><span>回路笔记</span></a>
+      <a class="c meta cs-back" href="#" @click.prevent="back()"><span>←</span><span>SweetRetry</span></a>
       <h1 class="c" x-text="current.title"></h1>
       <div class="c meta cs-ameta" x-text="current.date.replaceAll('-','.')+' · '+current.min+' 分钟'"></div>
       <template x-for="(b,i) in blocks" :key="i"><div class="row">

@@ -1,6 +1,6 @@
 ---
 version: alpha
-name: 回路笔记
+name: SweetRetry
 description: 一个关于 AI 与 agent 的个人博客的设计语言，基于 Tailwind CSS v4 与 shadcn/ui（base-nova）。
 colors:
   background: "#F8F6F1"
@@ -158,9 +158,9 @@ components:
     backgroundColor: "{colors.dark.ring}"
 ---
 
-# 回路笔记
+# SweetRetry
 
-回路笔记是一个记录 AI 与 agent 思考的个人博客。它的样子像一份认真誊写的讲义。暖纸底色，衬线正文，所有内容落在同一条左边线上，全站只有一种强调色。
+SweetRetry是一个记录 AI 与 agent 思考的个人博客。它的样子像一份认真誊写的讲义。暖纸底色，衬线正文，所有内容落在同一条左边线上，全站只有一种强调色。
 
 界面通用规则以 sweet-mode 为底，本文件只写这个博客的取值、覆盖和 agent 按默认会做错的判断。两者冲突时以本文件为准。设计版是同目录下的 `@index.html`。
 

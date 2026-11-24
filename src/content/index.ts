@@ -49,7 +49,7 @@ export const formatListDate = (d: string) => d.slice(5).replace("-", ".")
 export const formatFullDate = (d: string) => d.replaceAll("-", ".")
 
 export const site = {
-  name: "回路笔记",
+  name: "SweetRetry",
   intro: "记录一些突发的思考。",
   description:
     "一个关于 AI 与 agent 的个人博客，作者用中文写给正在做 agent 的同行。",

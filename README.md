@@ -1,4 +1,4 @@
-# 回路笔记
+# SweetRetry
 
 TanStack Start + shadcn/ui (base-nova) + Tailwind CSS v4，部署在 Vercel。界面规范见 `DESIGN.md`，设计稿是 `index.html`。
 
